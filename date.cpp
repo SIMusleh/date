@@ -96,7 +96,7 @@ bool Date::operator==(const Date& other) const {
 bool Date::operator!=(const Date& other) const { return !(*this == other); }
 bool Date::operator<(const Date& other) const {
     if (year != other.year) return year < other.year;
-    other.month) return month < other.month;
+    if (month != other.month) return month < other.month;
     return day < other.day;
 }
 bool Date::operator<=(const Date& other) const { return *this < other || *this == other; }
@@ -110,6 +110,7 @@ std::ostream& operator<<(std::ostream& out, const Date& date) {
         << std::setw(2) << std::setfill('0') << date.day;
     return out;
 }
+
 std::istream& operator>>(std::istream& in, Date& date) {
     int m, d, y;
     in >> m >> d >> y;
