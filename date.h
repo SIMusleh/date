@@ -11,10 +11,11 @@
 
 class Date {
 private:
-    int month;
-    int day;
-    int year;
+    int month;  // Month (1-12)
+    int day;    // Day (depends on month and leap year)
+    int year;   // Year (> 0)
 
+    // Helper functions for validation
     bool isValidDate(int m, int d, int y) const;
     int daysInMonth(int m, int y) const;
 
@@ -32,18 +33,21 @@ public:
     void setDay(int d);
     void setYear(int y);
 
-    // Leap Year
+    // Leap Year check
     bool isLeapYear(int y) const;
 
-    // Operator Overloads
-    Date operator+(int days) const;
-    friend Date operator+(int days, const Date& date);
+    // Arithmetic Operators
+    Date operator+(int days) const;                  // Add days to date
+    friend Date operator+(int days, const Date& date); // Add days (int + Date)
+
+    Date operator-(int days) const;                  // Subtract days from date
+    friend Date operator-(int days, const Date& date); // Subtract days (int - Date)
 
     // Increment/Decrement
     Date& operator++();
     Date operator++(int);
-    Date& operator--();
-    Date operator--(int);
+    Date& operator--(); 
+    Date operator--(int); 
 
     // Comparison
     bool operator==(const Date& other) const;
@@ -54,9 +58,8 @@ public:
     bool operator>=(const Date& other) const;
 
     // Stream Operators
-    friend std::ostream&operator<<(std::ostream& out, const Date& date);
+    friend std::ostream& operator<<(std::ostream& out, const Date& date);
     friend std::istream& operator>>(std::istream& in, Date& date);
-
 };
 
 #endif

@@ -1,12 +1,12 @@
 /* Program name: date.cpp
- * Author: Sahar Musleh
+ * Author: Sahar Musleh 
  * Date last updated: 11/26/2025
  * Purpose: Implements Date class with validation, leap year logic, and operator overloading.
  */
 
 #include "date.h"
 #include <iomanip>
-#include <stdexcept>
+#include <iostream>
 
 // Helper: Days in month
 int Date::daysInMonth(int m, int y) const {
@@ -96,7 +96,7 @@ bool Date::operator==(const Date& other) const {
 bool Date::operator!=(const Date& other) const { return !(*this == other); }
 bool Date::operator<(const Date& other) const {
     if (year != other.year) return year < other.year;
-    if (month != other.month) return month < other.month;
+    other.month) return month < other.month;
     return day < other.day;
 }
 bool Date::operator<=(const Date& other) const { return *this < other || *this == other; }
@@ -114,7 +114,9 @@ std::istream& operator>>(std::istream& in, Date& date) {
     int m, d, y;
     in >> m >> d >> y;
     if (date.isValidDate(m, d, y)) {
-       .day = d; date.year = y;
+        date.month = m;
+        date.day = d;
+        date.year = y;
     } else {
         std::cerr << "Invalid input date.\n";
         date.month = 1; date.day = 1; date.year = 2000;
