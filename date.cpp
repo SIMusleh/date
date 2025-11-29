@@ -1,7 +1,7 @@
 /* Program name: date.cpp
- * Author: Sahar Musleh 
- * Date last updated: 11/26/2025
- * Purpose: Implements Date class with validation, leap year logic, and operator overloading.
+ * Author: Sahar Musleh
+ * Date last updated: 11/29/2025
+ * Purpose: Implements date class with validation, leap year logic, and operator overloading.
  */
 
 #include "date.h"
@@ -9,21 +9,21 @@
 #include <iostream>
 
 // Helper: Days in month
-int Date::daysInMonth(int m, int y) const {
+int date::daysInMonth(int m, int y) const {
     if (m == 2) return isLeapYear(y) ? 29 : 28;
     if (m == 4 || m == 6 || m == 9 || m == 11) return 30;
     return 31;
 }
 
 // Helper: Validate date
-bool Date::isValidDate(int m, int d, int y) const {
+bool date::isValidDate(int m, int d, int y) const {
     if (y < 0 || m < 1 || m > 12) return false;
     if (d < 1 || d > daysInMonth(m, y)) return false;
     return true;
 }
 
 // Constructor
-Date::Date(int m, int d, int y) {
+date::date(int m, int d, int y) {
     if (isValidDate(m, d, y)) {
         month = m; day = d; year = y;
     } else {
@@ -33,34 +33,34 @@ Date::Date(int m, int d, int y) {
 }
 
 // Getters
-int Date::getMonth() const { return month; }
-int Date::getDay() const { return day; }
-int Date::getYear() const { return year; }
+int date::getMonth() const { return month; }
+int date::getDay() const { return day; }
+int date::getYear() const { return year; }
 
 // Setters
-void Date::setMonth(int m) {
+void date::setMonth(int m) {
     if (isValidDate(m, day, year)) month = m;
     else std::cerr << "Invalid month.\n";
 }
-void Date::setDay(int d) {
+void date::setDay(int d) {
     if (isValidDate(month, d, year)) day = d;
     else std::cerr << "Invalid day.\n";
 }
-void Date::setYear(int y) {
+void date::setYear(int y) {
     if (isValidDate(month, day, y)) year = y;
     else std::cerr << "Invalid year.\n";
 }
 
 // Leap Year
-bool Date::isLeapYear(int y) const {
+bool date::isLeapYear(int y) const {
     if (y % 4 != 0) return false;
     if (y % 100 != 0) return true;
     return (y % 400 == 0);
 }
 
 // Add/Subtract days
-Date Date::operator+(int days) const {
-    Date temp = *this;
+date date::operator+(int days) const {
+    date temp = *this;
     temp.day += days;
     while (temp.day > temp.daysInMonth(temp.month, temp.year)) {
         temp.day -= temp.daysInMonth(temp.month, temp.year);
@@ -69,10 +69,10 @@ Date Date::operator+(int days) const {
     }
     return temp;
 }
-Date operator+(int days, const Date& date) { return date + days; }
+date operator+(int days, const date& dt) { return dt + days; }
 
-Date Date::operator-(int days) const {
-    Date temp = *this;
+date date::operator-(int days) const {
+    date temp = *this;
     temp.day -= days;
     while (temp.day < 1) {
         temp.month--;
@@ -81,46 +81,46 @@ Date Date::operator-(int days) const {
     }
     return temp;
 }
-Date operator-(int days, const Date& date) { return date - days; }
+date operator-(int days, const date& dt) { return dt - days; }
 
 // Increment/Decrement
-Date& Date::operator++() { *this = *this + 1; return *this; }
-Date Date::operator++(int) { Date old = *this; ++(*this); return old; }
-Date& Date::operator--() { *this = *this - 1; return *this; }
-Date Date::operator--(int) { Date old = *this; --(*this); return old; }
+date& date::operator++() { *this = *this + 1; return *this; }
+date date::operator++(int) { date old = *this; ++(*this); return old; }
+date& date::operator--() { *this = *this - 1; return *this; }
+date date::operator--(int) { date old = *this; --(*this); return old; }
 
 // Comparison
-bool Date::operator==(const Date& other) const {
+bool date::operator==(const date& other) const {
     return year == other.year && month == other.month && day == other.day;
 }
-bool Date::operator!=(const Date& other) const { return !(*this == other); }
-bool Date::operator<(const Date& other) const {
+bool date::operator!=(const date& other) const { return !(*this == other); }
+bool date::operator<(const date& other) const {
     if (year != other.year) return year < other.year;
     if (month != other.month) return month < other.month;
     return day < other.day;
 }
-bool Date::operator<=(const Date& other) const { return *this < other || *this == other; }
-bool Date::operator>(const Date& other) const { return !(*this <= other); }
-bool Date::operator>=(const Date& other) const { return !(*this < other); }
+bool date::operator<=(const date& other) const { return *this < other || *this == other; }
+bool date::operator>(const date& other) const { return !(*this <= other); }
+bool date::operator>=(const date& other) const { return !(*this < other); }
 
 // Stream Operators
-std::ostream& operator<<(std::ostream& out, const Date& date) {
-    out << date.year << "-"
-        << std::setw(2) << std::setfill('0') << date.month << "-"
-        << std::setw(2) << std::setfill('0') << date.day;
+std::ostream& operator<<(std::ostream& out, const date& dt) {
+    out << dt.year << "-"
+        << std::setw(2) << std::setfill('0') << dt.month << "-"
+        << std::setw(2) << std::setfill('0') << dt.day;
     return out;
 }
 
-std::istream& operator>>(std::istream& in, Date& date) {
+std::istream& operator>>(std::istream& in, date& dt) {
     int m, d, y;
     in >> m >> d >> y;
-    if (date.isValidDate(m, d, y)) {
-        date.month = m;
-        date.day = d;
-        date.year = y;
+    if (dt.isValidDate(m, d, y)) {
+        dt.month = m;
+        dt.day = d;
+        dt.year = y;
     } else {
         std::cerr << "Invalid input date.\n";
-        date.month = 1; date.day = 1; date.year = 2000;
+        dt.month = 1; dt.day = 1; dt.year = 2000;
     }
     return in;
 }

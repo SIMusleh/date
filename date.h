@@ -1,7 +1,7 @@
 /* Program name: date.h
  * Author: Sahar Musleh
- * Date last updated: 11/26/2025
- * Purpose: Header file for Date class with validation, leap year logic, and operator overloading.
+ * Date last updated: 11/29/2025
+ * Purpose: Header file for date class with validation, leap year logic, and operator overloading.
  */
 
 #ifndef DATE_H
@@ -9,19 +9,18 @@
 
 #include <iostream>
 
-class Date {
+class date {
 private:
     int month;  // Month (1-12)
-    int day;    // Day (depends on month and leap year)
+    int day;    // Day (depengs on month and leap year)
     int year;   // Year (> 0)
 
-    // Helper functions for validation
     bool isValidDate(int m, int d, int y) const;
     int daysInMonth(int m, int y) const;
 
 public:
     // Constructor
-    Date(int m = 1, int d = 1, int y = 2000);
+    date(int m = 1, int d = 1, int y = 2000);
 
     // Getters
     int getMonth() const;
@@ -37,29 +36,29 @@ public:
     bool isLeapYear(int y) const;
 
     // Arithmetic Operators
-    Date operator+(int days) const;                  // Add days to date
-    friend Date operator+(int days, const Date& date); // Add days (int + Date)
+    date operator+(int days) const;                     // Add days to date
+    friend date operator+(int days, const date& dt);    // Add days (int + date)
 
-    Date operator-(int days) const;                  // Subtract days from date
-    friend Date operator-(int days, const Date& date); // Subtract days (int - Date)
+    date operator-(int days) const;                     // Subtract days from date
+    friend date operator-(int days, const date& dt);    // Subtract days (int -date)
 
     // Increment/Decrement
-    Date& operator++();
-    Date operator++(int);
-    Date& operator--(); 
-    Date operator--(int); 
+    date& operator++();    // Pre-increment
+    date operator++(int);  // Post-increment
+    date& operator--();    // Pre-decrement
+    date operator--(int);  // Post-decrement
 
     // Comparison
-    bool operator==(const Date& other) const;
-    bool operator!=(const Date& other) const;
-    bool operator<(const Date& other) const;
-    bool operator<=(const Date& other) const;
-    bool operator>(const Date& other) const;
-    bool operator>=(const Date& other) const;
+    bool operator==(const date& other) const;
+    bool operator!=(const date& other) const;
+    bool operator<(const date& other) const;
+    bool operator<=(const date& other) const;
+    bool operator>(const date& other) const;
+    bool operator>=(const date& other) const;
 
     // Stream Operators
-    friend std::ostream& operator<<(std::ostream& out, const Date& date);
-    friend std::istream& operator>>(std::istream& in, Date& date);
+    friend std::ostream& operator<<(std::ostream& out, const date& dt);
+    friend std::istream& operator>>(std::istream& in, date& dt);
 };
 
 #endif
